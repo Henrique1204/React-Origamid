@@ -1,54 +1,52 @@
-// Mostre os dados da aplicação, como aprensetado no vídeo
-// Não utilize CSS externo, use o style para mudar as cores
-// Se a situação estiver ativa pinte de verde, inativa vermelho
-// Se o gasto for maior que 10000 mostre uma mensagem
-const luana = {
-    cliente: 'Luana',
-    idade: 27,
-    compras: [
-        { nome: 'Notebook', preco: 'R$ 2500' },
-        { nome: 'Geladeira', preco: 'R$ 3000' },
-        { nome: 'Smartphone', preco: 'R$ 1500' },
-    ],
-    ativa: true,
-};
-
-const mario = {
-    cliente: 'Mario',
-    idade: 31,
-    compras: [
-        { nome: 'Notebook', preco: 'R$ 2500' },
-        { nome: 'Geladeira', preco: 'R$ 3000' },
-        { nome: 'Smartphone', preco: 'R$ 1500' },
-        { nome: 'Guitarra', preco: 'R$ 3500' },
-    ],
-    ativa: false,
-};
-
-const App = () => {
-    const dados = mario;
-
-    const situacao = (
-        <span style={{ color: (dados.ativa) ? "green" : "red" }}>
-            {(dados.ativa) ? "Ativa" : "Inativa"}
-        </span>
-    );
-
-    const totalGasto = dados["compras"]
-        .map(c => Number(c["preco"].replace("R$ ", "")) )
-        .reduce((total, atual) => total + atual, 0);
-
+// Organize os produtos como mostrado no vídeo
+// Mostre apenas produtos que forem mais caros que R$ 1500
+const produtos = [
+    {
+      id: 1,
+      nome: 'Smartphone',
+      preco: 'R$ 2000',
+      cores: ['#29d8d5', '#252a34', '#fc3766'],
+    },
+    {
+      id: 2,
+      nome: 'Notebook',
+      preco: 'R$ 3000',
+      cores: ['#ffd045', '#d4394b', '#f37c59'],
+    },
+    {
+      id: 3,
+      nome: 'Tablet',
+      preco: 'R$ 1500',
+      cores: ['#365069', '#47c1c8', '#f95786'],
+    },
+  ];
+  
+  const App = () => {
     return (
-        <div>
-            <ul style={{listStyle: "none", padding: "0px", fontWeight: "600"}}>
-                <li>Nome: {dados.cliente}</li>
-                <li>Idade: {dados.idade}</li>
-                <li>Situação: {situacao}</li>
-                <li>Total gasto: R$ {totalGasto}</li>
-                {totalGasto >= 10000 && <li>Você está gastando muito.</li>}
+        <section>
+            <ul style={{listStyle: "none", padding: "0px"}}>
+                {
+                    produtos.filter((p) => Number(p["preco"].replace("R$ ", "")) > 1500)
+                    .map(({id, nome, preco, cores}) => (
+                        <li key={id}>
+                            <h2>{nome}</h2>
+                            <p>Preço: {preco}</p>
+                            <ul style={{listStyle: "none"}}>
+                                {
+                                    cores.map(c => (
+                                        <li key={c} style={{color: "#FFF", backgroundColor: c, padding: "5px 10px", textTransform: "uppercase"}}>
+                                            {c}
+                                        </li>
+                                    ))
+                                }
+                            </ul>
+                        </li>
+                    ))
+                }
             </ul>
-        </div>
+        </section>
     );
-};
+  };
+  
 
 export default App;
