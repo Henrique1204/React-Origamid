@@ -26,7 +26,7 @@ const mario = {
 };
 
 const App = () => {
-    const dados = luana;
+    const dados = mario;
 
     const situacao = (
         <span style={{ color: (dados.ativa) ? "green" : "red" }}>
@@ -45,7 +45,7 @@ const App = () => {
                 <li>Idade: {dados.idade}</li>
                 <li>Situação: {situacao}</li>
                 <li>Total gasto: R$ {totalGasto}</li>
-                {(totalGasto >= 10000) ? <li>Você está gastando muito.</li> : ""}
+                {totalGasto >= 10000 && <li>Você está gastando muito.</li>}
             </ul>
         </div>
     );
