@@ -1,11 +1,10 @@
 import React from "react";
-
-const Titulo = ({cor, children}) => (<h1 style={{color: cor}}>{children}</h1>);
+import Navegacao from "./Componentes/Navegacao/Navegacao";
 
 const Header = () => {
     return (
         <header>
-            <Titulo cor="red">Header</Titulo>
+            <Navegacao />
         </header>
     );
 }
