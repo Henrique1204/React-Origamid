@@ -1,32 +1,26 @@
 import React from 'react';
-import Produto from "./Produto.js";
 
 const App = () => {
-    const [produto, setProduto] = React.useState(null);
+    const [comentarios, setComentarios] = React.useState([]);
+    const [input, setInput] = React.useState("");
+    const inputElement = React.useRef();
 
-    function handleProduto({target}) {
-        setProduto(target.innerText);
+    function handleClick() {
+        setComentarios([...comentarios, input]);
+        setInput("");
+        inputElement.current.focus();
     }
-
-    React.useEffect(() => {
-        if (produto) {
-            window.localStorage.setItem("produto", produto);
-        }
-    }, [produto]);
-
-    React.useEffect(() => {
-        const valor = window.localStorage.getItem("produto");
-        if (valor) {
-            setProduto(valor);
-        }
-    }, []);
 
     return (
         <div>
-            <h1>Preferência: {produto}</h1>
-            <button style={{margin: "0.5rem"}} onClick={handleProduto}>notebook</button>
-            <button style={{margin: "0.5rem"}} onClick={handleProduto}>smartphone</button>
-            <Produto produto={produto} />
+            <ul>
+                {comentarios.map((c, i) => (
+                    <li key={i + 1}>{c}</li>
+                ))}
+            </ul>
+
+            <input type="text" value={input} onChange={({target}) => {setInput(target.value)}} ref={inputElement}/>
+            <button onClick={handleClick}>Enviar</button>
         </div>
     );
 }
