@@ -1,28 +1,31 @@
 import React from 'react';
 
-const App = () => {
-    const [comentarios, setComentarios] = React.useState([]);
-    const [input, setInput] = React.useState("");
-    const inputElement = React.useRef();
+function operacaoLenta() {
+    let c
 
-    function handleClick() {
-        setComentarios([...comentarios, input]);
-        setInput("");
-        inputElement.current.focus();
+    for (let i = 0; i < 100000000; i++) {
+        c = i + i / 10;
     }
 
-    return (
-        <div>
-            <ul>
-                {comentarios.map((c, i) => (
-                    <li key={i + 1}>{c}</li>
-                ))}
-            </ul>
+    return c;
+}
 
-            <input type="text" value={input} onChange={({target}) => {setInput(target.value)}} ref={inputElement}/>
-            <button onClick={handleClick}>Enviar</button>
-        </div>
-    );
+const App = () => {
+    const [contar, setContar] = React.useState(0);
+
+    // const valor = React.useMemo(() => {
+    //     const localItem = window.localStorage.getItem("produto");
+
+    //     console.log("Aconteceu o memo");
+
+    //     return localItem;
+    // }, []);
+
+    const t1 = performance.now();
+    const valor = React.useMemo(() => operacaoLenta(), []);
+    console.log(performance.now() - t1);
+
+    return <button onClick={() => {setContar(contar + 1)}}>{contar}</button>
 }
 
 export default App;
