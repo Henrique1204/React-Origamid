@@ -1,31 +1,17 @@
 import React from 'react';
 
-function operacaoLenta() {
-    let c
-
-    for (let i = 0; i < 100000000; i++) {
-        c = i + i / 10;
-    }
-
-    return c;
-}
-
 const App = () => {
     const [contar, setContar] = React.useState(0);
 
-    // const valor = React.useMemo(() => {
-    //     const localItem = window.localStorage.getItem("produto");
+    // Evita que uma função seja declarada toda vez que for renderizado o componente.
+    const handleClick = React.useCallback(() => {
+        // o primeiro parâmetro do callback que o setState recebe é o valor anterior.
+        // É utilizado um callback em vez de passar o valor direto pra evitar de criar dependência.
+        // Pq com a dependência ele declararia a função a cada mudança de estado e seria o mesmo de não usar o useCallBack.
+        setContar((valorAnterios) => valorAnterios + 1);
+    }, []);
 
-    //     console.log("Aconteceu o memo");
-
-    //     return localItem;
-    // }, []);
-
-    const t1 = performance.now();
-    const valor = React.useMemo(() => operacaoLenta(), []);
-    console.log(performance.now() - t1);
-
-    return <button onClick={() => {setContar(contar + 1)}}>{contar}</button>
+    return <button onClick={handleClick}>{contar}</button>
 }
 
 export default App;
