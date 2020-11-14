@@ -1,56 +1,40 @@
 import React from 'react';
-import Form from './Form';
-
-const campos = [
-    {
-        id: "nome",
-        label: "Nome:",
-        type: "text",
-    },
-    {
-        id: "email",
-        label: "E-mail:",
-        type: "email",
-    },
-    {
-        id: "senha",
-        label: "Senha:",
-        type: "password",
-    },
-    {
-        id: "cep",
-        label: "CEP:",
-        type: "text",
-    },
-    {
-        id: "rua",
-        label: "Rua:",
-        type: "text",
-    },
-    {
-        id: "numero",
-        label: "Numero:",
-        type: "text",
-    },
-    {
-        id: "bairro",
-        label: "Bairro:",
-        type: "text",
-    },
-    {
-        id: "cidade",
-        label: "Cidade:",
-        type: "text",
-    },
-    {
-        id: "estado",
-        label: "Estado:",
-        type: "text",
-    }
-];
 
 const App = () => {
-    return <Form campos={campos} />;
+    const [produto, setProduto] = React.useState("");
+    const [cor, setCor] = React.useState("");
+
+    return (
+        <form>
+            <div>
+                <h2>Produto</h2>
+                <p>Selecionado: {produto}</p>
+                <label>
+                    <input type="radio" name="produto" value="notebook" onChange={({target}) => {setProduto(target.value)}}/>
+                    Notebook
+                </label>
+
+                <label>
+                    <input type="radio" name="produto" value="smartphone" onChange={({target}) => {setProduto(target.value)}}/>
+                    Smartphone
+                </label>
+            </div>
+
+            <div>
+                <h2>Cor</h2>
+                <p>Selecionado: {cor}</p>
+                <label>
+                    <input type="radio" name="cor" value="azul" onChange={({target}) => {setCor(target.value)}}/>
+                    Azul
+                </label>
+
+                <label>
+                    <input type="radio" name="cor" value="vermelhor" onChange={({target}) => {setCor(target.value)}}/>
+                    Vermelhor
+                </label>
+            </div>
+        </form>
+    );
 };
 
 export default App;
