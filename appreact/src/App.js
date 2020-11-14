@@ -1,38 +1,32 @@
 import React from 'react';
 
+const coresArray = ["azul", "roxo", "laranja", "verde", "vermelho", "cinza"];
+
 const App = () => {
-    const [produto, setProduto] = React.useState("");
-    const [cor, setCor] = React.useState("");
+    const [cores, setCores] = React.useState([]);
+
+    function handleChange({target}) {
+        if (target.checked) {
+            setCores([...cores, target.value]);
+        } else {
+            setCores(cores.filter((cor) => cor !== target.value));
+        }
+    }
+
+    function checkCor(cor) {
+        return cores.includes(cor);
+    }
 
     return (
         <form>
-            <div>
-                <h2>Produto</h2>
-                <p>Selecionado: {produto}</p>
-                <label>
-                    <input type="radio" name="produto" value="notebook" onChange={({target}) => {setProduto(target.value)}}/>
-                    Notebook
+            {
+                coresArray.map((c) => (
+                <label key={c} style={{textTransform: "capitalize"}}>
+                    <input type="checkbox" value={c} checked={checkCor(c)} onChange={handleChange}/>
+                    {c}
                 </label>
-
-                <label>
-                    <input type="radio" name="produto" value="smartphone" onChange={({target}) => {setProduto(target.value)}}/>
-                    Smartphone
-                </label>
-            </div>
-
-            <div>
-                <h2>Cor</h2>
-                <p>Selecionado: {cor}</p>
-                <label>
-                    <input type="radio" name="cor" value="azul" onChange={({target}) => {setCor(target.value)}}/>
-                    Azul
-                </label>
-
-                <label>
-                    <input type="radio" name="cor" value="vermelhor" onChange={({target}) => {setCor(target.value)}}/>
-                    Vermelhor
-                </label>
-            </div>
+                ))
+            }
         </form>
     );
 };
