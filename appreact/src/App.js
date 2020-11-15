@@ -1,14 +1,12 @@
 import React from 'react';
-import Input from './Form/Input';
+import Select from './Form/Select';
 
 const App = () => {
-    const [nome, setNome] = React.useState("");
-    const [email, setEmail] = React.useState("");
+    const [select, setSelect] = React.useState("Tablet");
 
     return (
         <form>
-            <Input id="nome" label="Nome" value={nome} onChange={({target}) => setNome(target.value)} />
-            <Input id="email" label="E-mail" value={email} onChange={({target}) => setEmail(target.value)} required type="email" />
+            <Select options={["Smartphone", "Tablet"]} value={select} onChange={({target}) => setSelect(target.value)}/>
         </form>
     );
 };
