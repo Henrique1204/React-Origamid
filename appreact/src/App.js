@@ -1,12 +1,12 @@
 import React from 'react';
-import Select from './Form/Select';
+import Radio from './Form/Radio';
 
 const App = () => {
-    const [select, setSelect] = React.useState("Tablet");
+    const [cor, setCor] = React.useState("");
 
     return (
         <form>
-            <Select options={["Smartphone", "Tablet"]} value={select} onChange={({target}) => setSelect(target.value)}/>
+            <Radio options={["azul", "vermelho"]} value={cor} onChange={({target}) => setCor(target.value)} />
         </form>
     );
 };
