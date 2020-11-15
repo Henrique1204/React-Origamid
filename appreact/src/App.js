@@ -1,12 +1,16 @@
 import React from 'react';
-import Radio from './Form/Radio';
+import Checkbox from './Form/Checkbox';
 
 const App = () => {
-    const [cor, setCor] = React.useState("");
+    const [linguagens, setLinguagens] = React.useState([]);
+
+    // No caso de ser um checkbox individual, você mantém do memso jeito.
+    // E para checar se foi selecionado ou não você utiliza a fomra abaixo:
+    // if (linguagens > 0) "Enviar"
 
     return (
         <form>
-            <Radio options={["azul", "vermelho"]} value={cor} onChange={({target}) => setCor(target.value)} />
+            <Checkbox options={["JavaScript", "Java", "PHP", "C#"]} valor={linguagens} setValor={setLinguagens}/>
         </form>
     );
 };
