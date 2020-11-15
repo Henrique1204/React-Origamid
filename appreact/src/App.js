@@ -1,30 +1,79 @@
 import React from 'react';
-import Input from "./Form/Input.js";
-import useForm from './Hook/useForm.js';
+import Radio from './Form/Radio';
+
+const perguntas = [
+    {
+      pergunta: 'Qual método é utilizado para criar componentes?',
+      options: [
+        'React.makeComponent()',
+        'React.createComponent()',
+        'React.createElement()',
+      ],
+      resposta: 'React.createElement()',
+      id: 'p1',
+    },
+    {
+      pergunta: 'Como importamos um componente externo?',
+      options: [
+        'import Component from "./Component"',
+        'require("./Component")',
+        'import "./Component"',
+      ],
+      resposta: 'import Component from "./Component"',
+      id: 'p2',
+    },
+    {
+      pergunta: 'Qual hook não é nativo?',
+      options: ['useEffect()', 'useFetch()', 'useCallback()'],
+      resposta: 'useFetch()',
+      id: 'p3',
+    },
+    {
+      pergunta: 'Qual palavra deve ser utilizada para criarmos um hook?',
+      options: ['set', 'get', 'use'],
+      resposta: 'use',
+      id: 'p4',
+    },
+  ];
 
 const App = () => {
-    const nome = useForm();
-    const sobrenome = useForm(false);
-    const email = useForm("email");
-    const senha = useForm("senha");
+    const [respostas, setRespostas] = React.useState({
+        p1: "",
+        p2: "",
+        p3: "",
+        p4: ""
+    });
+    const [slide, setSlide] = React.useState(0);
+    const [resultado, setResultado] = React.useState(null);
+
+    function handleChange({target}) {
+        setRespostas({...respostas, [target.id]: target.value});
+    }
+
+    function resultadoFinal() {
+        const corretas = perguntas.filter(({id, resposta}) => respostas[id] === resposta);
+        setResultado(`Você acertou: ${corretas.length} de ${perguntas.length}`);
+    }
 
     function handleSubmit(event) {
         event.preventDefault();
-        const isValido = nome.validar() && email.validar() && senha.validar();
-
-        if (!isValido) {
-            console.log("Não enviou!");
+        if (slide < (perguntas.length - 1)) {
+            setSlide(slide + 1);
+        } else {
+            resultadoFinal();
+            setSlide(slide + 1);
         }
     }
 
     return (
         <form onSubmit={handleSubmit}>
-            <Input label="Nome:" id="nome" {...nome} />
-            <Input label="Sobrenome:" id="sobrenome" {...sobrenome} />
-            <Input label="E-mail:" id="email" type="email" {...email} />
-            <Input label="Senha:" id="senha" type="password" {...senha} />
+            {
+                perguntas.map((p, i) => (
+                    <Radio key={p.id} ativo={slide === i} {...p} value={respostas[p.id]} onChange={handleChange} />       
+                ))
+            }
 
-            <button>Enviar</button>
+            {resultado ? <p>{resultado}</p> : <button>Próxima</button>}
         </form>
     );
 };
