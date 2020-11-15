@@ -1,16 +1,59 @@
 import React from 'react';
-import Checkbox from './Form/Checkbox';
+import Input from "./Form/Input.js";
 
 const App = () => {
-    const [linguagens, setLinguagens] = React.useState([]);
+    const [cep, setCep] = React.useState("");
+    const [erro, setErro] = React.useState(null);
 
-    // No caso de ser um checkbox individual, você mantém do memso jeito.
-    // E para checar se foi selecionado ou não você utiliza a fomra abaixo:
-    // if (linguagens > 0) "Enviar"
+    function validarCep(valor) {
+        if (valor.length === 0) {
+            setErro("Preencha um valor.");
+            return false;
+        } else if (!/^\d{5}-?\d{3}$/.test(valor)) {
+            // ^ - Diz que tem que começar ali.
+            // \d{5} - Diz que tem que ter 5 digitos.
+            // -? - Diz que o traço é opcional.
+            // \d{3} - Diz que tem que ter mais 3 digitos.
+            // $ - Diz que tem que acabar ali.
+            // .test() - Método de regex, que testa se o valor passado é válido pra expressão definida.
+            setErro("Preencha um CEP válido.");
+            return false;
+        } else {
+            setErro(null);
+            return true;
+        }
+    }
+
+    const inputCepProps = {
+        label: "CEP",
+        id: "cep",
+        placeholder: "00000-000",
+        value: cep,
+        onChange: ({target}) => {
+            if (erro) validarCep(target.value);
+            setCep(target.value);
+        },
+        onBlur: ({target}) => {
+            validarCep(target.value);
+        }
+    };
+
+    function handleSubmit(event) {
+        event.preventDefault();
+
+        if (validarCep(cep)) {
+            console.log("Enviou!");
+            setErro(null);
+        } else {
+            setErro("Erro ao enviar, verifique os campos!");
+        }
+    }
 
     return (
-        <form>
-            <Checkbox options={["JavaScript", "Java", "PHP", "C#"]} valor={linguagens} setValor={setLinguagens}/>
+        <form onSubmit={handleSubmit}>
+            <Input {...inputCepProps} />
+            {erro && <small>{erro}</small>}
+            <button>Enviar</button>
         </form>
     );
 };
