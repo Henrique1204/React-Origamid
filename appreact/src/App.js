@@ -1,30 +1,23 @@
 import React from 'react';
-import Slide from './Slide';
+import {BrowserRouter, Routes, Route} from "react-router-dom";
+import Header from "./Header.js";
+import Home from "./Home.js";
+import Sobre from "./Sobre.js";
+import Footer from "./Footer.js";
 
 const App = () => {
-  const slides = [
-    {
-      id: "slide1",
-      texto: "Texto 1"
-    },
-    {
-      id: "slide2",
-      texto: "Texto 2"
-    },
-    {
-      id: "slide3",
-      texto: "Texto 3"
-    },
-    {
-      id: "slide4",
-      texto: "Texto 4"
-    }
-  ]
-
   return (
-    <div>
-      <Slide slides={slides} />
-    </div>    
+    <BrowserRouter>
+      <Header />
+
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="sobre" element={<Sobre />} />
+        <Route path="*" element={<h1>404</h1>} />
+      </Routes>
+  
+      <Footer />
+    </BrowserRouter>
   );
 };
 
