@@ -1,28 +1,31 @@
 import React from 'react';
 import {BrowserRouter, Routes, Route} from "react-router-dom";
-import Header from "./Header.js";
-import Home from "./Home.js";
-import Sobre from "./Sobre.js";
-import Footer from "./Footer.js";
-import Login from './Login.js';
-import Produto from './Produto.js';
+import "./App.css";
+import Header from './Componentes/Header.js';
+import Produtos from "./Componentes/Produtos.js";
+import Produto from "./Componentes/Produto.js";
+import Contato from "./Componentes/Contato.js";
+import Footer from './Componentes/Footer.js';
 
 const App = () => {
   return (
-    <BrowserRouter>
-      <Header />
-
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="sobre" element={<Sobre />} />
-        <Route path="login" element={<Login />} />
-        <Route path="produto/:id" element={<Produto />} />
-        <Route path="*" element={<h1>404</h1>} />
-      </Routes>
+    <div className="App">
+      <BrowserRouter>
+        <Header />
+        
+          <div className="conteudo">
+            <Routes>
+              <Route path="/" element={<Produtos />} />
+              <Route path="produto/:id" element={<Produto />} />
+              <Route path="contato" element={<Contato />} />
+            </Routes>
+          </div>
+        
+        <Footer />
+      </BrowserRouter>
+    </div>
+    );
+  };
   
-      <Footer />
-    </BrowserRouter>
-  );
-};
-
-export default App;
+  export default App;
+  
