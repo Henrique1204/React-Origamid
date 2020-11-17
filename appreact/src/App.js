@@ -1,9 +1,25 @@
 import React from 'react';
-import Button from "./Button.js";
+
+function reducer(state, action) {
+  switch (action) {
+    case "aumentar":
+      return state + 1;
+    case "diminuir":
+        return state - 1;
+    default:
+      throw new Error("O valor passado no dispatch é inválido!");
+  }
+}
 
 const App = () => {
+  const [state, dispatch] = React.useReducer(reducer, 0);
+
   return (
-    <Button >Clique aqui</Button>
+    <div>
+      <h1>{state}</h1>
+      <button onClick={() => dispatch("aumentar")}>+</button>
+      <button onClick={() => dispatch("diminuir")}>-</button>
+    </div>
   );
 };
   
